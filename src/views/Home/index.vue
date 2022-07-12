@@ -21,14 +21,31 @@
         <Articale :channelList="channel"></Articale>
       </van-tab>
       <div slot="nav-right" class="placeholder"></div>
-      <div slot="nav-right" class="hanbuger-btn">
+      <div slot="nav-right" class="hanbuger-btn" @click="clkEdit">
         <i class="toutiao toutiao-gengduo"></i>
       </div>
     </van-tabs>
+
+    <!-- 频道列表 -->
+    <van-popup
+      v-model="show"
+      position="bottom"
+      :style="{ height: '100%' }"
+      closeable
+      close-icon="cross"
+      close-icon-position="top-left"
+    >
+      <ChannelEdit
+        :channelMy="channel"
+        :active="active"
+        @update="onUpdate"
+      ></ChannelEdit>
+    </van-popup>
   </div>
 </template>
 
 <script>
+import ChannelEdit from "@/components/channel";
 import Articale from "./components/articale_list.vue";
 import { getChannelData } from "@/api/user";
 export default {
@@ -37,6 +54,7 @@ export default {
       // value: "",
       active: 0,
       channel: [],
+      show: false,
     };
   },
   name: "HomePages",
@@ -46,6 +64,7 @@ export default {
   },
   components: {
     Articale,
+    ChannelEdit,
   },
   methods: {
     async loadChannel() {
@@ -56,6 +75,15 @@ export default {
       } catch (error) {
         this.$toast("获取数据失败");
       }
+    },
+    clkEdit() {
+      this.show = true;
+    },
+    // 同步我的频道切换
+    // 自定义事件传参
+    onUpdate(index, show) {
+      this.active = index;
+      this.show = show;
     },
   },
 };

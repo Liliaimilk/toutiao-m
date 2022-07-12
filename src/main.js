@@ -7,10 +7,12 @@ import store from './store'
 //rem适配
 import 'amfe-flexible'
 import './styles/index.less'
+
+import './utils/dayjs'
 // import store from './store'
 // Vue.use(Vant)
 //添加vant组件
-import { Button, NavBar, Form, Field, Toast, CountDown, Tabbar, TabbarItem, Icon, Image as VanImage, Grid, GridItem, Cell, CellGroup, Dialog, Search, Tab, Tabs, List, PullRefresh } from 'vant';
+import { Button, NavBar, Form, Field, Toast, CountDown, Tabbar, TabbarItem, Icon, Image as VanImage, Grid, GridItem, Cell, CellGroup, Dialog, Search, Tab, Tabs, List, PullRefresh, Popup } from 'vant';
 // import './styles/index.less'
 
 
@@ -36,6 +38,7 @@ Vue.use(Tab);
 Vue.use(Tabs);
 Vue.use(List)
 Vue.use(PullRefresh)
+Vue.use(Popup);
 
 new Vue({
   router,

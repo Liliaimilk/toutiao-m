@@ -14,12 +14,16 @@
         error-text="请求失败，点击重新加载"
         @load="onLoad"
       >
-        <van-cell
+        <!-- <van-cell
           v-for="(list, index) in list"
           :key="index"
           :title="list.title"
-        />
-        <!-- <ArticaleItem></ArticaleItem> -->
+        /> -->
+        <ArticaleItem
+          v-for="(article, index) in list"
+          :key="index"
+          :articales="article"
+        ></ArticaleItem>
       </van-list>
     </van-pull-refresh>
   </div>
@@ -112,10 +116,11 @@ export default {
     async onRefresh() {
       try {
         const { data } = await getArticaleList({
+          // 在哪个频道就把当前的频道id传过去，然接口发回当前频道的数据
           channel_id: this.channelList.id,
           //   请求第一页的数据为当前事件戳
-          // 请求之后的的数据的时间戳会在当前请求结果中返回给你
-          timestamp: 1657373491662,
+          // 获取当前时间戳
+          timestamp: Date.now(),
           with_top: 1,
         });
         const { results } = data.data;
