@@ -50,7 +50,9 @@
 </template>
 
 <script>
-import { getAllChannel } from "@/api/channel";
+import { mapState } from "vuex";
+import { getAllChannel, getUpdateChannel, delChannel } from "@/api/channel";
+import { setItem } from "@/utils/storage";
 export default {
   data() {
     return {
@@ -71,6 +73,7 @@ export default {
     },
   },
   computed: {
+    ...mapState(["user"]),
     // 推荐频道
     recommendChannel() {
       // 方法一：
@@ -109,7 +112,7 @@ export default {
     async loadChannel() {
       try {
         const { data } = await getAllChannel();
-        console.log(data);
+        // console.log(data);
         this.allChannel = data.data.channels;
       } catch (error) {
         this.$toast("获取失败");
@@ -120,8 +123,24 @@ export default {
     // 因为推荐频道的方法写在计算属性中
     // 计算属性会观测内部依赖数据的变化
     // 如果依赖的数据发生变化，则计算属性会重新执行(直白的说就是会重新执行方法)
-    onAddChannelmy(value) {
+    async onAddChannelmy(value) {
       this.channelMy.push(value);
+      // 登录状态我的频道同步线上
+      // 将添加的id和顺序传入，后端自己修改
+      try {
+        if (this.user) {
+          await getUpdateChannel({
+            id: value.id,
+            seq: this.channelMy.length,
+          });
+        } else {
+          // 未登录状态存入本地存储
+          // console.log(this.channelMy, "123");
+          setItem("TOUTIAO_CHANNELS", this.channelMy);
+        }
+      } catch (error) {
+        this.$toast("获取数据失败");
+      }
     },
 
     // 我的频道icon close的显示和关闭
@@ -144,10 +163,26 @@ export default {
         if (index <= this.active) {
           this.$emit("update", this.active - 1, true);
         }
+        // 删除
+        this.delteChannel(value);
       }
       //   非编辑状态
       else {
         this.$emit("update", index);
+      }
+    },
+    // 删除线上频道和本地
+    async delteChannel(value) {
+      const target = value.id;
+      console.log(target, "12345");
+      try {
+        if (this.user) {
+          await delChannel(target);
+        } else {
+          setItem("TOUTIAO_CHANNELS", this.channelMy);
+        }
+      } catch (error) {
+        this.$toast("获取数据失败");
       }
     },
   },

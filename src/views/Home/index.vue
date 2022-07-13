@@ -7,6 +7,7 @@
         type="info"
         size="small"
         icon="search"
+        to="/search"
         round
         >搜索</van-button
       >
@@ -45,9 +46,11 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
 import ChannelEdit from "@/components/channel";
 import Articale from "./components/articale_list.vue";
 import { getChannelData } from "@/api/user";
+import { getItem } from "@/utils/storage";
 export default {
   data() {
     return {
@@ -62,6 +65,9 @@ export default {
   created() {
     this.loadChannel();
   },
+  computed: {
+    ...mapState(["user"]),
+  },
   components: {
     Articale,
     ChannelEdit,
@@ -69,8 +75,25 @@ export default {
   methods: {
     async loadChannel() {
       try {
-        const { data } = await getChannelData();
-        this.channel = data.data.channels;
+        // 是否为登录状态
+        if (this.user) {
+          const { data } = await getChannelData();
+          this.channel = data.data.channels;
+        } else {
+          // 获取本地存储
+          // 本地存储无数据时返回的为[]，不为空(应该是写法问题嘿嘿)
+          const localChannel = getItem("TOUTIAO_CHANNELS");
+          // console.log(!localChannel);
+          // 判断本地存储是否为空
+          if (localChannel == [] || localChannel == "") {
+            const { data } = await getChannelData();
+            this.channel = data.data.channels;
+          } else {
+            // 不为空则用默认接口数据
+            this.channel = localChannel;
+          }
+        }
+        this.channel = this.channel;
         console.log(this.channel);
       } catch (error) {
         this.$toast("获取数据失败");

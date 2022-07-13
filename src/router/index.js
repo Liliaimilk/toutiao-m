@@ -50,6 +50,11 @@ const routes = [
                 component: () => import('@/views/My')
             },
         ]
+    },
+    {
+        path: '/search',
+        name: 'search',
+        component: () => import('@/components/searcch'),
     }
 ]
 const router = new VueRouter({
