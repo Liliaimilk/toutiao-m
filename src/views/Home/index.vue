@@ -85,9 +85,11 @@ export default {
           const localChannel = getItem("TOUTIAO_CHANNELS");
           // console.log(!localChannel);
           // 判断本地存储是否为空
-          if (localChannel == [] || localChannel == "") {
+          if (localChannel == [] || localChannel == null) {
+            // console.log("1234");
             const { data } = await getChannelData();
             this.channel = data.data.channels;
+            // console.log(channel, "123");
           } else {
             // 不为空则用默认接口数据
             this.channel = localChannel;

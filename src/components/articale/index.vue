@@ -1,6 +1,15 @@
 <template>
   <div>
-    <van-cell class="ArticleItem">
+    <van-cell
+      class="ArticleItem"
+      :to="{
+        name: 'article',
+        //传递动态路由参数
+        params: {
+          articleId: articales.art_id,
+        },
+      }"
+    >
       <div class="title van-multi-ellipsis--l2" slot="title">
         {{ articales.title }}
       </div>

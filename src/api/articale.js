@@ -7,3 +7,10 @@ export const getArticaleList = params => {
         params
     })
 }
+
+export const getArticaleDetail = articleId => {
+    return request({
+        methods: 'GET',
+        url: `/app/v1_0/articles/${articleId}`,
+    })
+}

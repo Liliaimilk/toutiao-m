@@ -18,7 +18,12 @@
       :value="value"
       @search="onSearch"
     ></searchSuggest>
-    <searchHistory v-else></searchHistory>
+    <searchHistory
+      v-else
+      :searchHistory="isSearchHistory"
+      @allDel="isSearchHistory = []"
+      @search="onSearch"
+    ></searchHistory>
   </div>
 </template>
 
@@ -26,18 +31,33 @@
 import searchHistory from "./components/search_history.vue";
 import searchSuggest from "./components/search_suggest.vue";
 import searchResult from "./components/search_result.vue";
-
+import { setItem, getItem } from "@/utils/storage";
 export default {
+  name: "searchIndex",
   data() {
     return {
       value: "",
       isResult: "",
+      // 获取本地存储数据
+      isSearchHistory: getItem("TOUTIAO_HISTORY") || [],
     };
+  },
+  // 监听数据变化并存入本地存储
+  watch: {
+    isSearchHistory(value) {
+      setItem("TOUTIAO_HISTORY", value);
+    },
   },
   methods: {
     onSearch(val) {
       //   Toast(val);
       this.value = val;
+      console.log(val);
+      // 去除重复的搜索记录
+      const index = this.isSearchHistory.indexOf(val);
+      if (index == -1) {
+        this.isSearchHistory.unshift(val);
+      }
       console.log(val);
       this.isResult = true;
     },

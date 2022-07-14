@@ -6,7 +6,7 @@
       finished-text="没有更多了"
       @load="onLoad"
     >
-      <van-cell :title="obj.title" v-for="obj in list" :key="obj.ch_id" />
+      <van-cell :title="obj.title" v-for="obj in list" :key="obj.au_id" />
     </van-list>
   </div>
 </template>

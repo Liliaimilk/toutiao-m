@@ -2,6 +2,8 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from '@/router';
 import store from './store'
+// 文章详情样式
+// import 'github-markdown-css'
 // import Vant from 'vant' 全部导入
 // import 'vant/lib/index.css'
 //rem适配
@@ -12,7 +14,7 @@ import './utils/dayjs'
 // import store from './store'
 // Vue.use(Vant)
 //添加vant组件
-import { Button, NavBar, Form, Field, Toast, CountDown, Tabbar, TabbarItem, Icon, Image as VanImage, Grid, GridItem, Cell, CellGroup, Dialog, Search, Tab, Tabs, List, PullRefresh, Popup } from 'vant';
+import { Button, NavBar, Form, Field, Toast, CountDown, Tabbar, TabbarItem, Icon, Image as VanImage, Grid, GridItem, Cell, CellGroup, Dialog, Search, Tab, Tabs, List, PullRefresh, Popup, Loading, Divider } from 'vant';
 // import './styles/index.less'
 
 
@@ -39,6 +41,8 @@ Vue.use(Tabs);
 Vue.use(List)
 Vue.use(PullRefresh)
 Vue.use(Popup);
+Vue.use(Loading);
+Vue.use(Divider);
 
 new Vue({
   router,
