@@ -23,7 +23,7 @@ const request = axios.create({
 // 方法一就时在发起请求时，添加token
 request.interceptors.request.use((config) => {
     // config为请求的配置对象
-    // console.log(config);
+    console.log(config);
     // 获取token
     const { user } = store.state
     if (user && user.token) {

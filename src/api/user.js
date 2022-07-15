@@ -11,7 +11,7 @@ export const login = data => {
 
 export const sendSms = mobile => {
     return request({
-        method: 'GET',
+        methods: 'GET',
         url: 'app/v1_0/sms/codes/' + mobile,
     })
 }
@@ -33,5 +33,66 @@ export const getChannelData = () => {
     return request({
         methods: 'GET',
         url: 'app/v1_0/user/channels'
+    })
+}
+
+// 关注用户
+export const followUser = data => {
+    return request({
+        methods: 'POST',
+        url: "/app/v1_0/user/followings",
+        data
+    })
+}
+
+// 取消用户
+export const cancelFollowUser = target => {
+    // 把methods的s去掉就不报错了挺离谱的
+    return request({
+        method: 'DELETE',
+        url: `/app/v1_0/user/followings/${target}`,
+    })
+}
+
+//收藏文章
+export const collectArt = target => {
+    // 把methods的s去掉就不报错了挺离谱的
+    return request({
+        methods: 'POST',
+        url: "/app/v1_0/article/collections",
+        target
+    })
+}
+
+// 取消收藏
+export const cancelCollect = target => {
+    // 把methods的s去掉就不报错了挺离谱的
+    return request({
+        method: 'DELETE',
+        url: `/app/v1_0/article/collections/${target}`,
+    })
+}
+
+
+//取消点赞
+export const cancelGood = target => {
+    // 把methods的s去掉就不报错了挺离谱的
+    return request({
+        method: 'DELETE',
+        url: `/app/v1_0/article/likings/${target}`,
+    })
+}
+
+
+
+// /点赞
+export const goodjob = target => {
+    // 把methods的s去掉就不报错了挺离谱的
+    return request({
+        method: 'POST',
+        url: "/app/v1_0/article/likings",
+        data: {
+            target
+        }
     })
 }

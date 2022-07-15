@@ -83,7 +83,7 @@ export default {
           // 获取本地存储
           // 本地存储无数据时返回的为[]，不为空(应该是写法问题嘿嘿)
           const localChannel = getItem("TOUTIAO_CHANNELS");
-          // console.log(!localChannel);
+          console.log(localChannel);
           // 判断本地存储是否为空
           if (localChannel == [] || localChannel == null) {
             // console.log("1234");
