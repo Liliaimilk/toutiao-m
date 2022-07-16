@@ -8,8 +8,10 @@ const request = axios.create({
     // data：后端返回的原始数据，就是JSON格式的字符串
     transformResponse: [function (data) {
         try {
+            // console.log(data);
             return JSONBig.parse(data)
         } catch (error) {
+            // console.log('123');
             return data
         }
 

@@ -63,14 +63,31 @@
         <div class="article-content" v-html="articaleDetail.content"></div>
 
         <van-divider>正文结束</van-divider>
+        <!--文章评论 -->
+        <comment
+          :artId="articaleDetail.art_id"
+          @update-comment="totalComment = $event.total_count"
+        ></comment>
 
         <!--文章一起加载避免出现获取不到数据的警告 -->
         <!-- 底部区域 -->
         <div class="article-bottom">
-          <van-button class="comment-btn" type="default" round size="small"
+          <van-button
+            class="comment-btn"
+            type="default"
+            round
+            size="small"
+            @click="show = true"
             >写评论</van-button
           >
-          <van-icon name="comment-o" badge="123" color="#777" />
+
+          <!-- 评论输入框 -->
+          <van-popup v-model="show" position="bottom">
+            <comment_post :target="articaleDetail.art_id" />
+          </van-popup>
+
+          <!-- 评论数 -->
+          <van-icon name="comment-o" :badge="totalComment" color="#777" />
           <!--收藏 -->
           <collect
             v-model="articaleDetail.is_collected"
@@ -115,6 +132,8 @@ import { getArticaleDetail } from "@/api/articale";
 import followUser from "@/components/followUser";
 import collect from "@/components/collect";
 import goodJob from "@/components/goodJob";
+import comment from "./components/comment.vue";
+import comment_post from "./components/comment_post.vue";
 
 export default {
   name: "articleDetail",
@@ -122,6 +141,8 @@ export default {
     followUser,
     collect,
     goodJob,
+    comment,
+    comment_post,
   },
   props: {
     articleId: {
@@ -135,6 +156,8 @@ export default {
       loading: false,
       errorStatus: 0,
       isLoading: false,
+      totalComment: 0,
+      show: false, //弹出框的判断值
     };
   },
   computed: {},

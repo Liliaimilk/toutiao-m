@@ -185,13 +185,17 @@ export default {
     }
   }
   .grid_nav {
+    // display: flex;
     .grid_nav_btn {
+      // flex-direction: column;
+      // justify-content: center;
+      // align-items: center;
       .toutiao {
         color: #ec5e5e;
         font-size: 45px;
       }
       span {
-        margin-top: 15px;
+        // margin-top: 15px;
         font-size: 31px;
       }
     }
