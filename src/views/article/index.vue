@@ -65,7 +65,8 @@
         <van-divider>正文结束</van-divider>
         <!--文章评论 -->
         <comment
-          :artId="articaleDetail.art_id"
+          :source="articaleDetail.art_id"
+          @reply_comment="onReply"
           @update-comment="totalComment = $event.total_count"
         ></comment>
 
@@ -121,6 +122,15 @@
         >
       </div>
       <!-- /加载失败：其它未知错误（例如网络原因或服务端异常） -->
+
+      <!-- 评论回复 -->
+      <van-popup v-model="isReply" position="bottom" :style="{ height: '75%' }">
+        <comment_reply
+          :comment="currentComment"
+          v-if="isReply"
+          @cancel_reply="isReply = false"
+          :replyComment="totalComment"
+      /></van-popup>
     </div>
   </div>
 </template>
@@ -134,15 +144,27 @@ import collect from "@/components/collect";
 import goodJob from "@/components/goodJob";
 import comment from "./components/comment.vue";
 import comment_post from "./components/comment_post.vue";
+import comment_reply from "./components/comment_reply.vue";
 
 export default {
   name: "articleDetail",
+  //依赖注册
+  // 把值传给所有的后代组件
+  // 这里传值不能传this.articaleDetail.art_id会出现undefined
+  // 原因或是因为页面元素还未渲染创建成功就进行取值
+  provide: function () {
+    // console.log(this.articleId, "154");
+    return {
+      artId: this.articleId,
+    };
+  },
   components: {
     followUser,
     collect,
     goodJob,
     comment,
     comment_post,
+    comment_reply,
   },
   props: {
     articleId: {
@@ -158,6 +180,8 @@ export default {
       isLoading: false,
       totalComment: 0,
       show: false, //弹出框的判断值
+      isReply: false, //评论回复弹出
+      currentComment: "",
     };
   },
   computed: {},
@@ -212,6 +236,12 @@ export default {
     },
     clk() {
       console.log("123");
+    },
+
+    onReply(comment) {
+      console.log(comment, "228");
+      this.currentComment = comment;
+      this.isReply = true;
     },
   },
 };

@@ -29,13 +29,21 @@ export default {
       required: true,
     },
   },
+  // 接收provide
+  inject: {
+    artId: {
+      type: [Number, Object, Array],
+      required: null,
+    },
+  },
   methods: {
     async onPost() {
+      // console.log(this.artId, "40");
       try {
         const { data } = await postComment({
-          target: this.target,
+          target: this.target.toString(),
           content: this.message,
-          art_id: null,
+          art_id: this.artId ? this.artId.toString() : null,
         });
         console.log(data);
         // this.$emit("input", false);
@@ -43,6 +51,7 @@ export default {
         this.$toast("发送失败");
       }
       this.message = "";
+      this.$emit("close");
     },
   },
 };

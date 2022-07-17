@@ -26,7 +26,7 @@
           <span class="comment-pubdate">{{
             comment.pubdate | relativeTime
           }}</span>
-          <van-button class="reply-btn" round
+          <van-button class="reply-btn" round @click="$emit('reply', comment)"
             >回复 {{ comment.reply_count }}</van-button
           >
         </div>
@@ -49,6 +49,11 @@ export default {
       type: Object,
       required: true,
     },
+    // 评论的回复数
+    // total_reply: {
+    //   type: Number,
+    //   required: true,
+    // },
     // artId:{
     //   type:[Number,Object,Array],
     //   required:true
