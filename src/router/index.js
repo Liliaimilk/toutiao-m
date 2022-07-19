@@ -15,7 +15,7 @@ const routes = [
         path: '/login',
         name: 'login',
         // component: Login
-        // 默认显示 用这种写法上面不用引用
+        // 默认显示 用这种写法不用引用组件，而是直接获取跳转的路径，减少消耗
         component: () => import('@/views/login/index.vue'),
 
     },
@@ -61,7 +61,16 @@ const routes = [
         name: 'article',
         component: () => import('@/views/article'),
         props: true
+    },
+    {
+        path: '/user/:userId',
+        name: 'user',
+        component: () => import('@/views/user'),
+        props: true
+
+
     }
+
 
 ]
 const router = new VueRouter({

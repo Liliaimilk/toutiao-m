@@ -31,16 +31,17 @@
 import { followUser, cancelFollowUser } from "@/api/user";
 
 export default {
+  name: "follow",
   data() {
     return {
       isLoading: false,
     };
   },
   //  修改默认的model值
-  model: {
-    prop: "isFollow",
-    event: "updateFollow",
-  },
+  // model: {
+  //   prop: "isFollow",
+  //   event: "updateFollow",
+  // },
   props: {
     isFollow: {
       type: Boolean,
@@ -51,28 +52,40 @@ export default {
       required: true,
     },
   },
+  watch: {
+    isFollow(e, n) {
+      console.log(this.isFollow, 3);
+    },
+  },
+  created() {
+    console.log(this.isFollow);
+    console.log(this.isUserID);
+    console.log("----------");
+    console.log(2);
+  },
+  mounted() {
+    console.log(this.isFollow);
+    console.log(this.isUserID);
+  },
   methods: {
     //关注用户
     async onFollow() {
       // 禁止连续点击，节流
+      // console.log(this.isFollow, "58");
       this.isLoading = true;
       try {
         if (this.isFollow) {
           await cancelFollowUser(this.isUserID);
-          //   console.log(data, "58");
         } else {
-          // console.log(this.articaleDetail.aut_id);
           await followUser(this.isUserID);
-          //   console.log(data, "63");
         }
-        // this.isFollow = !this.isFollow;
+        this.$emit("updateFollow", !this.isFollow);
       } catch (error) {
-        console.log(error);
+        // console.log(error);
         this.$toast("操作失败");
       }
 
       this.isLoading = false;
-      this.$emit("updateFollow", !this.isFollow);
     },
   },
 };

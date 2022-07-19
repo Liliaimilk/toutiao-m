@@ -37,11 +37,13 @@ export const getChannelData = () => {
 }
 
 // 关注用户
-export const followUser = data => {
+export const followUser = target => {
     return request({
         methods: 'POST',
         url: "/app/v1_0/user/followings",
-        data
+        data: {
+            target
+        }
     })
 }
 
@@ -60,7 +62,9 @@ export const collectArt = target => {
     return request({
         methods: 'POST',
         url: "/app/v1_0/article/collections",
-        target
+        data: {
+            target
+        }
     })
 }
 
@@ -94,5 +98,13 @@ export const goodjob = target => {
         data: {
             target
         }
+    })
+}
+
+//获取指定用户的信息
+export const userMsg = target => {
+    return request({
+        methods: 'GET',
+        url: `/app/v1_0/users/${target}`
     })
 }

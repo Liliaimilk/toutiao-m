@@ -38,8 +38,8 @@ export default {
           //  返回值为空
           //   console.log(data);
         } else {
-          await collectArt(this.collectID);
-          //   console.log(data);
+          const data = await collectArt(this.collectID);
+          console.log(data, "123");
         }
         this.$emit("input", !this.value);
         // 因为this.value是在传递之前的值，所以这里用非

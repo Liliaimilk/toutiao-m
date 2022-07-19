@@ -1,7 +1,13 @@
 <template>
-  <div class="article-container markdown-body" ref="content">
+  <div class="article-container markdown-body">
     <!-- 导航栏 -->
-    <van-nav-bar class="page-nav-bar" left-arrow title="白驴头条"></van-nav-bar>
+    <van-nav-bar class="page-nav-bar" title="白驴头条">
+      <van-icon
+        slot="left"
+        name="arrow-left"
+        @click="$router.back()"
+      ></van-icon>
+    </van-nav-bar>
     <!-- /导航栏 -->
 
     <div class="main-wrap">
@@ -25,7 +31,14 @@
             round
             fit="cover"
             :src="articaleDetail.aut_photo"
+            @click="
+              $router.push({
+                name: 'user',
+                params: { userId: articaleDetail.aut_id },
+              })
+            "
           />
+          <!-- 28行 跳转至用户界面 -->
           <div slot="title" class="user-name">
             {{ articaleDetail.aut_name }}
           </div>
@@ -60,7 +73,11 @@
         <!-- /用户信息 -->
 
         <!-- 文章内容 -->
-        <div class="article-content" v-html="articaleDetail.content"></div>
+        <div
+          class="article-content"
+          v-html="articaleDetail.content"
+          ref="content"
+        ></div>
 
         <van-divider>正文结束</van-divider>
         <!--文章评论 -->
@@ -138,7 +155,7 @@
 
 <script>
 import { ImagePreview } from "vant";
-import { getArticaleDetail } from "@/api/articale";
+import { getArticaleDetail } from "@/api/article";
 import followUser from "@/components/followUser";
 import collect from "@/components/collect";
 import goodJob from "@/components/goodJob";
@@ -199,7 +216,7 @@ export default {
       //   获取文章信息
       try {
         const { data } = await getArticaleDetail(this.articleId);
-        console.log(data);
+        // console.log(data);
         this.articaleDetail = data.data;
         // dom渲染不能及时所以延迟获取dom
         setTimeout(() => {
@@ -219,6 +236,7 @@ export default {
       // 添加this.$nextTick会使articleContent未定义
       //   获取dom元素
       const articleContent = this.$refs["content"];
+      // console.log(articleContent, "223");
       const imags = articleContent.querySelectorAll("img");
       const images = [];
       imags.forEach((img, index) => {
@@ -234,12 +252,9 @@ export default {
       });
       //   console.log(images);
     },
-    clk() {
-      console.log("123");
-    },
 
     onReply(comment) {
-      console.log(comment, "228");
+      // console.log(comment, "228");
       this.currentComment = comment;
       this.isReply = true;
     },

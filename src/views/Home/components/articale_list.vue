@@ -32,7 +32,7 @@
 <script>
 import ArticaleItem from "@/components/articale";
 
-import { getArticaleList } from "@/api/articale";
+import { getArticaleList } from "@/api/article";
 export default {
   data() {
     return {

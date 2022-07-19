@@ -39,8 +39,8 @@ export default {
           await cancelGood(this.gjobId);
           console.log("39");
         } else {
-          await goodjob(this.gjobId);
-          console.log("42");
+          const { data } = await goodjob(this.gjobId);
+          console.log(data, "42");
         }
         this.$emit("input", -this.value);
       } catch (error) {

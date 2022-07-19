@@ -73,7 +73,7 @@ export default {
           offset: this.offset,
           limit: this.limit,
         });
-        console.log(data);
+        // console.log(data);
         const { results } = data.data;
         this.list.push(...results);
         this.loading = false;
