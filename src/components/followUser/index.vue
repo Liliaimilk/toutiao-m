@@ -38,10 +38,10 @@ export default {
     };
   },
   //  修改默认的model值
-  // model: {
-  //   prop: "isFollow",
-  //   event: "updateFollow",
-  // },
+  model: {
+    prop: "isFollow",
+    event: "updateFollow",
+  },
   props: {
     isFollow: {
       type: Boolean,
@@ -58,14 +58,14 @@ export default {
     },
   },
   created() {
-    console.log(this.isFollow);
-    console.log(this.isUserID);
-    console.log("----------");
-    console.log(2);
+    // console.log(this.isFollow);
+    // console.log(this.isUserID);
+    // console.log("----------");
+    // console.log(2);
   },
   mounted() {
-    console.log(this.isFollow);
-    console.log(this.isUserID);
+    // console.log(this.isFollow);
+    // console.log(this.isUserID);
   },
   methods: {
     //关注用户
@@ -81,8 +81,13 @@ export default {
         }
         this.$emit("updateFollow", !this.isFollow);
       } catch (error) {
-        // console.log(error);
-        this.$toast("操作失败");
+        console.log(error);
+        // 禁止关注自己
+        if (error.response.status === 410) {
+          this.$toast("不能关注自己哦！");
+        } else {
+          this.$toast("操作失败");
+        }
       }
 
       this.isLoading = false;

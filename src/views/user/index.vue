@@ -34,9 +34,10 @@
         </div>
 
         <!-- 关注 -->
-        <div class="follow" v-if="flag">
+        <!-- v-if="flag" -->
+        <div class="follow">
           <followUser
-            :isFollow="userMessage.is_following"
+            v-model="userMessage.is_following"
             :isUserID="userMessage.id"
           />
         </div>
@@ -90,7 +91,7 @@ export default {
       loading: false,
       finished: false,
       page: 1,
-      flag: false,
+      // flag: false,
     };
   },
   components: {
@@ -105,21 +106,18 @@ export default {
   methods: {
     // 获取作者信息
     async loadUserMsg() {
-      // try {
-      // 接收作者id
-      // console.log(this.$route.params.userId);
-      const { data } = await userMsg(this.$route.params.userId);
-      // console.log(data);
-      this.userMessage = data.data;
-      this.flag = true;
-      // this.userMessage = {
-      //   is_following: false,
-      //   id: 3,
-      // };
-      console.log(this.userMessage);
-      // } catch (error) {
-      //   this.$toast("获取失败");
-      // }
+      try {
+        // 接收作者id
+        // console.log(this.$route.params.userId);
+        const { data } = await userMsg(this.$route.params.userId);
+        // console.log(data);
+        this.userMessage = data.data;
+        // this.flag = true;
+
+        console.log(this.userMessage);
+      } catch (error) {
+        this.$toast("获取失败");
+      }
     },
 
     // 加载文章列表

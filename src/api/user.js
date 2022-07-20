@@ -39,7 +39,7 @@ export const getChannelData = () => {
 // 关注用户
 export const followUser = target => {
     return request({
-        methods: 'POST',
+        method: 'post',
         url: "/app/v1_0/user/followings",
         data: {
             target
@@ -60,7 +60,7 @@ export const cancelFollowUser = target => {
 export const collectArt = target => {
     // 把methods的s去掉就不报错了挺离谱的
     return request({
-        methods: 'POST',
+        method: 'post',
         url: "/app/v1_0/article/collections",
         data: {
             target
@@ -108,3 +108,20 @@ export const userMsg = target => {
         url: `/app/v1_0/users/${target}`
     })
 }
+// 获取用户自己的信息
+export const getSelfMsg = () => {
+    return request({
+        method: 'get',
+        url: "/app/v1_0/user/profile"
+    })
+}
+
+// 编辑用户昵称
+export const editsUserMsg = data => {
+    return request({
+        method: 'patch',
+        url: "/app/v1_0/user/profile",
+        data
+    })
+}
+

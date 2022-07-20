@@ -14,7 +14,7 @@ import './utils/dayjs'
 // import store from './store'
 // Vue.use(Vant)
 //添加vant组件
-import { Button, NavBar, Form, Field, Toast, CountDown, Tabbar, TabbarItem, Icon, Image as VanImage, Grid, GridItem, Cell, CellGroup, Dialog, Search, Tab, Tabs, List, PullRefresh, Popup, Loading, Divider } from 'vant';
+import { Button, NavBar, Form, Field, Toast, CountDown, Tabbar, TabbarItem, Icon, Image as VanImage, Grid, GridItem, Cell, CellGroup, Dialog, Search, Tab, Tabs, List, PullRefresh, Popup, Loading, Divider, DatetimePicker } from 'vant';
 // import './styles/index.less'
 
 
@@ -43,7 +43,7 @@ Vue.use(PullRefresh)
 Vue.use(Popup);
 Vue.use(Loading);
 Vue.use(Divider);
-
+Vue.use(DatetimePicker);
 new Vue({
   router,
   store,
