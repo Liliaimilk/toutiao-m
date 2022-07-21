@@ -125,3 +125,11 @@ export const editsUserMsg = data => {
     })
 }
 
+// 编辑用户头像
+export function updateUserPhoto(data) {
+    return request({
+        method: 'patch',
+        url: '/app/v1_0/user/photo',
+        data
+    })
+}

@@ -12,7 +12,9 @@
 
     <!-- 个人资料 -->
     <div class="personDetail">
-      <van-cell title="头像" is-link>
+      <!-- 头像 -->
+      <input type="file" hidden ref="file" @change="onChange" />
+      <van-cell title="头像" is-link @click="$refs.file.click()">
         <van-image
           slot="default"
           width="30px"
@@ -22,6 +24,18 @@
           :src="list.photo"
         />
       </van-cell>
+      <van-popup
+        v-model="isAvatar"
+        position="bottom"
+        :style="{ height: '100%' }"
+        v-if="isAvatar"
+      >
+        <userAvatar
+          :value="img"
+          @close="isAvatar = false"
+          @updatePhoto="list.photo = $event"
+        />
+      </van-popup>
       <!-- 昵称 -->
       <van-cell
         title="昵称"
@@ -83,6 +97,7 @@ import { getSelfMsg, editsUserMsg } from "@/api/user";
 import userSex from "./components/userSex.vue";
 import userName from "./components/userName.vue";
 import userDate from "./components/userDate.vue";
+import userAvatar from "./components/userAvatar.vue";
 export default {
   name: "PersonMsg",
   data() {
@@ -91,12 +106,15 @@ export default {
       isName: false,
       isSex: false,
       isDate: false,
+      isAvatar: false,
+      img: null,
     };
   },
   components: {
     userName,
     userSex,
     userDate,
+    userAvatar,
   },
   created() {
     this.loadSelfMsg();
@@ -141,6 +159,19 @@ export default {
         this.$toast("操作失败");
         console.log(error);
       }
+    },
+    // 头像
+    onChange() {
+      // 获取文件对象
+      const file = this.$refs.file.files[0];
+      // 基于文章对象获取blob数据
+      const data = window.URL.createObjectURL(file);
+      console.log(data);
+      this.img = data;
+      this.isAvatar = true;
+      // chang事件不触发，所以再次选同一张的时候不会打开弹窗
+      // 将value值清空
+      this.$refs.file.value = "";
     },
   },
 };
