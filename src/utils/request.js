@@ -1,6 +1,8 @@
 import axios from "axios";
 import store from '@/store'
 import JSONBig from 'json-bigint'
+// import { mapGetters } from "vuex";
+
 const request = axios.create({
     baseURL: 'http://api-toutiao-web.itheima.net/',
 
@@ -27,7 +29,8 @@ request.interceptors.request.use((config) => {
     // config为请求的配置对象
     // console.log(config);
     // 获取token
-    const { user } = store.state
+    const { user } = store.getters
+    console.log(store);
     if (user && user.token) {
         config.headers.Authorization = `Bearer ${user.token}`
 

@@ -1,6 +1,7 @@
 <template>
   <div class="layout-container">
-    <!-- 一级路由 -->
+    <!-- e二级路由 -->
+
     <router-view></router-view>
     <van-tabbar class="layout-tabbar" route>
       <van-tabbar-item to="/home"
@@ -16,7 +17,7 @@
         <i slot="icon" class="toutiao toutiao-shipin"></i>
       </van-tabbar-item>
       <van-tabbar-item to="/my"
-        >{{ $store.state.user ? "我的" : "未登录" }}
+        >{{ user ? "我的" : "未登录" }}
         <i slot="icon" class="toutiao toutiao-wode"></i>
       </van-tabbar-item>
     </van-tabbar>
@@ -24,8 +25,13 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 export default {
+  // eslint-disable-next-line vue/multi-word-component-names
   name: "Layout",
+  computed: {
+    ...mapGetters(["user"]),
+  },
 };
 </script>
 

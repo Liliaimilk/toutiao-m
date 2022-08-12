@@ -66,7 +66,7 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapGetters, mapMutations } from "vuex";
 import { getUserInfo } from "@/api/user";
 export default {
   data() {
@@ -76,11 +76,13 @@ export default {
   },
   name: "MyPage",
   computed: {
-    ...mapState(["user"]),
+    ...mapGetters(["user"]),
+    ...mapMutations(["login/setUser"]),
   },
   created() {
     // 确认vuex或本地仓储是否存在token（也就是是否处于登录状态）
     if (this.user) {
+      console.log("84");
       this.getInfo();
     }
   },
@@ -92,7 +94,7 @@ export default {
         })
         .then(() => {
           // on confirm
-          this.$store.commit("setUser", null);
+          this.$store.commit("login/setUser", null);
         })
         .catch(() => {
           // on cancel
@@ -105,6 +107,7 @@ export default {
         console.log(data);
         this.userInfo = data.data;
       } catch (error) {
+        console.log(error);
         this.$toast("获取失败~~暂时出了点问题呢");
       }
     },

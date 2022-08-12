@@ -45,6 +45,7 @@ export default {
       successText: "刷新成功",
     };
   },
+  // eslint-disable-next-line vue/multi-word-component-names
   name: "articale",
   props: {
     channelList: {

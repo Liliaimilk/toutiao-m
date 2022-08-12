@@ -49,7 +49,8 @@
 </template>
 
 <script>
-import { login, sendSms } from "@/api/user";
+import { mapActions } from "vuex";
+import { sendSms } from "@/api/user";
 export default {
   data() {
     return {
@@ -88,6 +89,7 @@ export default {
   created() {},
   mounted() {},
   methods: {
+    ...mapActions(["login/getUserInfo"]),
     // 2、当表单提交的时候会自动触发表单验证
     //        如果验证通过，会触发 submit 事件
     //        如果验证失败，不会触发 submit
@@ -101,12 +103,13 @@ export default {
       });
 
       try {
-        const { data } = await login(user);
-        console.log("成功", data);
-        this.$store.commit("setUser", data.data);
+        // const { data } = await login(user);
+        // console.log("成功", data);
+        // await this.$refs.loginFrom.validate("mobile");
+        await this.$store.dispatch("login/getUserInfo", user);
         this.$toast.success("登陆成功");
         // 登录成功后返回登录页面，有缺陷
-        this.$router.back();
+        this.$router.push("/my");
       } catch (err) {
         console.log(err);
         if (err.response.status === 403) {
@@ -130,7 +133,7 @@ export default {
       this.isCountDownShow = true;
       try {
         await sendSms(this.user.mobile);
-        console.log(mobile);
+        // console.log(mobile);
         console.log(sendSms);
       } catch (error) {
         console.log("789", error);

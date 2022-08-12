@@ -46,7 +46,7 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapGetters } from "vuex";
 import ChannelEdit from "@/components/channel";
 import Articale from "./components/articale_list.vue";
 import { getChannelData } from "@/api/user";
@@ -66,7 +66,7 @@ export default {
     this.loadChannel();
   },
   computed: {
-    ...mapState(["user"]),
+    ...mapGetters(["user"]),
   },
   components: {
     Articale,
@@ -76,9 +76,12 @@ export default {
     async loadChannel() {
       try {
         // 是否为登录状态
+        let channels = "";
+        console.log(this.user);
         if (this.user) {
+          console.log("123");
           const { data } = await getChannelData();
-          this.channel = data.data.channels;
+          channels = data.data.channels;
         } else {
           // 获取本地存储
           // 本地存储无数据时返回的为[]，不为空(应该是写法问题嘿嘿)
@@ -88,14 +91,14 @@ export default {
           if (localChannel == [] || localChannel == null) {
             // console.log("1234");
             const { data } = await getChannelData();
-            this.channel = data.data.channels;
+            channels = data.data.channels;
             // console.log(channel, "123");
           } else {
             // 不为空则用默认接口数据
             this.channel = localChannel;
           }
         }
-        this.channel = this.channel;
+        this.channel = channels;
         console.log(this.channel);
       } catch (error) {
         this.$toast("获取数据失败");
