@@ -94,7 +94,7 @@ export default {
         })
         .then(() => {
           // on confirm
-          this.$store.commit("login/setUser", null);
+          this.$store.commit("login/setUser");
         })
         .catch(() => {
           // on cancel

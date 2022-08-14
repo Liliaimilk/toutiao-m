@@ -82,6 +82,7 @@ export default {
           console.log("123");
           const { data } = await getChannelData();
           channels = data.data.channels;
+          this.channel = channels;
         } else {
           // 获取本地存储
           // 本地存储无数据时返回的为[]，不为空(应该是写法问题嘿嘿)
@@ -92,13 +93,14 @@ export default {
             // console.log("1234");
             const { data } = await getChannelData();
             channels = data.data.channels;
+            this.channel = channels;
+
             // console.log(channel, "123");
           } else {
             // 不为空则用默认接口数据
             this.channel = localChannel;
           }
         }
-        this.channel = channels;
         console.log(this.channel);
       } catch (error) {
         this.$toast("获取数据失败");

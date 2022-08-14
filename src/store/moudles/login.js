@@ -1,6 +1,6 @@
 import { login } from "@/api/user";
-
-import { getItem, setItem } from '@/utils/storage'
+import { getTimeSamp } from "@/utils/auth";
+import { getItem, setItem, removeItem } from '@/utils/storage'
 
 // token
 const TOKEN_KEY = 'TOUTIAO_USER'
@@ -18,13 +18,22 @@ const mutations = {
         setItem(TOKEN_KEY, state.user)
         // window.localStorage.setItem(TOKEN_KEY, JSON.stringify(state.user))
 
+    },
+    // 退出登录
+    logout() {
+        removeItem(TOKEN_KEY)
+        // 重新注入时间戳
+        getTimeSamp()
+        console.log(getTimeSamp());
+
     }
 }
 const actions = {
     async getUserInfo(context, user) {
         const { data } = await login(user);
         context.commit('setUser', data.data)
-    }
+    },
+
 }
 export default {
     namespaced: true,
