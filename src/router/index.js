@@ -75,6 +75,12 @@ const routes = [
         name: 'profile',
         component: () => import('@/views/user-profile'),
         props: true
+    },
+    {
+        path: '/follow',
+        name: 'follow',
+        component: () => import('@/components/followFans'),
+        props: true
     }
 
 

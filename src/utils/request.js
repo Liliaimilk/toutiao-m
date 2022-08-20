@@ -48,7 +48,9 @@ request.interceptors.request.use((config) => {
 
 }, (error) => {
     // 系统返回检验
-    if (error.response.data.code === 401) {
+    console.log(error);
+    if (error.response.status === 404) {
+        // console.log("53");
         store.commit('login/logout')
         router.push('./login')
         return Promise.reject(new Error('登录超时'))

@@ -18,7 +18,7 @@
           <span class="data_num"> {{ userInfo.art_count }}</span>
           <span class="data_cont"> 头条 </span>
         </div>
-        <div class="data_item">
+        <div class="data_item" @click="$router.push('/follow')">
           <span class="data_num">{{ userInfo.like_count }}</span>
           <span class="data_cont"> 关注 </span>
         </div>
@@ -68,6 +68,7 @@
 <script>
 import { mapGetters, mapMutations } from "vuex";
 import { getUserInfo } from "@/api/user";
+// import router from "@/router";
 export default {
   data() {
     return {
@@ -77,7 +78,7 @@ export default {
   name: "MyPage",
   computed: {
     ...mapGetters(["user"]),
-    ...mapMutations(["login/setUser"]),
+    ...mapMutations(["login/setUser", "login/logout"]),
   },
   created() {
     // 确认vuex或本地仓储是否存在token（也就是是否处于登录状态）
@@ -108,6 +109,12 @@ export default {
         this.userInfo = data.data;
       } catch (error) {
         console.log(error);
+        if (error.response.status === 401) {
+          // console.log("53");
+          this.$store.commit("login/logout");
+          this.$router.push("./login");
+          return Promise.reject(new Error("登录超时"));
+        }
         this.$toast("获取失败~~暂时出了点问题呢");
       }
     },
