@@ -89,7 +89,7 @@ export default {
   created() {},
   mounted() {},
   methods: {
-    ...mapActions(["login/getUserInfo"]),
+    ...mapActions(["login/getUserToken"]),
     // 2、当表单提交的时候会自动触发表单验证
     //        如果验证通过，会触发 submit 事件
     //        如果验证失败，不会触发 submit
@@ -106,7 +106,7 @@ export default {
         // const { data } = await login(user);
         // console.log("成功", data);
         // await this.$refs.loginFrom.validate("mobile");
-        await this.$store.dispatch("login/getUserInfo", user);
+        await this.$store.dispatch("login/getUserToken", user);
         this.$toast.success("登陆成功");
         // 登录成功后返回登录页面，有缺陷
         this.$router.push("/my");

@@ -1,4 +1,4 @@
-import { login } from "@/api/user";
+import { login, getUserInfo } from "@/api/user";
 import { getTimeSamp } from "@/utils/auth";
 import { getItem, setItem, removeItem } from '@/utils/storage'
 
@@ -8,7 +8,8 @@ const TOKEN_KEY = 'TOUTIAO_USER'
 const state = {
     // 一个对象，存储当前用户登录的用户信息
     // user: JSON.parse(window.localStorage.getItem(TOKEN_KEY))
-    user: getItem(TOKEN_KEY)
+    user: getItem(TOKEN_KEY),
+    userInfo: {}
 }
 const mutations = {
     setUser(state, data) {
@@ -18,6 +19,10 @@ const mutations = {
         setItem(TOKEN_KEY, state.user)
         // window.localStorage.setItem(TOKEN_KEY, JSON.stringify(state.user))
 
+    },
+    // 获取个人信息
+    getUser(state, data) {
+        state.userInfo = data
     },
     // 退出登录
     logout() {
@@ -29,10 +34,18 @@ const mutations = {
     }
 }
 const actions = {
-    async getUserInfo(context, user) {
+    // 获取token
+    async getUserToken(context, user) {
         const { data } = await login(user);
+        // console.log(data, '34');
         context.commit('setUser', data.data)
     },
+    // 获取个人信息
+    async getUserInfo(context) {
+        const { data } = await getUserInfo()
+        // console.log(data, '44');
+        context.commit('getUser', data.data)
+    }
 
 }
 export default {

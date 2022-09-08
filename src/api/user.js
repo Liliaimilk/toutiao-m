@@ -1,4 +1,4 @@
-import store from '@/store'
+// import store from '@/store'
 import request from '@/utils/request'
 
 export const login = data => {
@@ -131,5 +131,14 @@ export function updateUserPhoto(data) {
         method: 'patch',
         url: '/app/v1_0/user/photo',
         data
+    })
+}
+
+// 获取关注用户列表
+export function followUserList(target) {
+    return request({
+        method: "get",
+        url: '/app/v1_0/user/followings',
+        target
     })
 }

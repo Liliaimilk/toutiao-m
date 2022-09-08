@@ -66,19 +66,19 @@
 </template>
 
 <script>
-import { mapGetters, mapMutations } from "vuex";
-import { getUserInfo } from "@/api/user";
+import { mapActions, mapGetters, mapMutations } from "vuex";
 // import router from "@/router";
 export default {
   data() {
     return {
-      userInfo: {},
+      // userInfo: this.userInfo,
     };
   },
   name: "MyPage",
   computed: {
-    ...mapGetters(["user"]),
-    ...mapMutations(["login/setUser", "login/logout"]),
+    ...mapGetters(["user", "userInfo"]),
+    ...mapMutations(["login/setUser", "login/logout", "login/getUser"]),
+    ...mapActions(["login/getUserInfo"]),
   },
   created() {
     // 确认vuex或本地仓储是否存在token（也就是是否处于登录状态）
@@ -104,9 +104,13 @@ export default {
     // 如果处于登录状态，则异步运行以下,拿到用户数据
     async getInfo() {
       try {
-        const { data } = await getUserInfo();
-        console.log(data);
-        this.userInfo = data.data;
+        await this.$store.dispatch("login/getUserInfo");
+        // this.$store.commit("login/getUser");
+        console.log(this.userInfo, "109");
+
+        // const { data } = await getUserInfo();
+        // console.log(data);
+        // this.userInfo = data.data;
       } catch (error) {
         console.log(error);
         if (error.response.status === 401) {

@@ -151,7 +151,6 @@
     </div>
   </div>
 </template>
-</template>
 
 <script>
 import { ImagePreview } from "vant";
