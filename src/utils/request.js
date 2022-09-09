@@ -49,7 +49,7 @@ request.interceptors.request.use((config) => {
 }, (error) => {
     // 系统返回检验
     console.log(error);
-    if (error.response.status === 404) {
+    if (error.response.status === 401) {
         // console.log("53");
         store.commit('login/logout')
         router.push('./login')

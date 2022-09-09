@@ -142,3 +142,11 @@ export function followUserList(target) {
         target
     })
 }
+
+// 获取用户粉丝列表
+export function fansList() {
+    return request({
+        method: 'get',
+        url: "/app/v1_0/user/followers",
+    })
+}
