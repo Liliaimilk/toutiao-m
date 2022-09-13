@@ -42,7 +42,7 @@
     </div>
 
     <van-grid :column-num="2" class="grid_nav" clickable>
-      <van-grid-item class="grid_nav_btn">
+      <van-grid-item class="grid_nav_btn" @click="$router.push('/myCollects')">
         <i slot="icon" class="toutiao toutiao-shoucang"></i>
         <span slot="text">收藏</span>
       </van-grid-item>

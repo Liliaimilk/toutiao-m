@@ -81,6 +81,12 @@ const routes = [
         name: 'follow',
         component: () => import('@/components/followFans'),
         props: true
+    },
+    {
+        path: '/myCollect',
+        name: 'myCollect',
+        component: () => import('@/components/myCollects'),
+        props: true
     }
 
 
